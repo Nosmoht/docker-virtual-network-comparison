@@ -20,7 +20,7 @@ Following requirements must be fulfilled to run the tests:
 # Installation
 - Clone the repository
 ```shell
-$ git clone https://github.com/Nosmoht/docker-virtual-network-comparison.git
+$ git clone http://github.com/Nosmoht/docker-virtual-network-comparison.git
 ```
 
 - Change into the directory
