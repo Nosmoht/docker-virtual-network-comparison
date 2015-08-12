@@ -1,0 +1,24 @@
+#cloud-config
+
+---
+coreos:
+  etcd:
+    discovery: https://discovery.etcd.io/6fd5c8966fc1c211cb2e36b46ddec0cb
+    addr: $public_ipv4:4001
+    peer-addr: $public_ipv4:7001
+  flannel:
+    interface: $public_ipv4
+  fleet:
+    public-ip: $public_ipv4
+  units:
+  - name: etcd.service
+    command: start
+  - name: fleet.service
+    command: start
+  - name: flanneld.service
+    drop-ins:
+    - name: 50-network-config.conf
+      content: |
+        [Service]
+        ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "169.254.0.0/16", "Backend": {"Type": "vxlan"} }'
+    command: start
